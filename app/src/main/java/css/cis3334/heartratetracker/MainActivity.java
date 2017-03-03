@@ -1,5 +1,6 @@
 package css.cis3334.heartratetracker;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,12 +41,23 @@ public class MainActivity extends AppCompatActivity {
         hrAdapter.setDropDownViewResource(R.layout.heart_rate_row);
         lvHeartRates.setAdapter(hrAdapter);
 
+
+
+
         lvHeartRates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 HeartRate hr = (HeartRate) parent.getItemAtPosition(position);
                 tvSelect.setText("You selected: " + hr.toString());
+
+                double pulse = Double.parseDouble(hr.getPulse().toString());
+                String range = (hr.getRange().toString());
+
+                Intent secActIntent = new Intent (MainActivity.this, ResultActivity.class);
+                secActIntent.putExtra("pulse", pulse);
+                secActIntent.putExtra("range", range);
+                startActivity(secActIntent);
             }
         });
 
